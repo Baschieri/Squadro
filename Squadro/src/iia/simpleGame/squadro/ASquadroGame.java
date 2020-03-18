@@ -173,11 +173,45 @@ public abstract class ASquadroGame extends AGame {
     {
     	File f = new File(fileName);
     	BufferedWriter writer = null;
+    	
     	try
     	{
 			writer = new BufferedWriter(new FileWriter(f));
 			
-			writer.write("");
+			writer.write("% ABCDEFG\n");
+			
+			
+			for(int i = 0; i < 7; i++) // scorre la riga
+			{
+				writer.write("0" + i);
+				
+				for(int j = 0; j < 7; j++) // scorre la colonna
+				{
+					if(pawnPositionsH.get(i).position == j)
+						if(pawnPositionsH.get(i).forward == true)
+							writer.write('>');
+						else
+							writer.write('<');
+					else
+					if(pawnPositionsV.get(j).position == i)
+						if(pawnPositionsV.get(j).forward == true)
+							writer.write('^');
+						else
+							writer.write('v');
+					else
+						writer.write('.');
+				}
+				
+				writer.write("0" + i);
+			}
+			
+			writer.write("% ABCDEFG\n");
+			
+			if(this.turn == 'h')
+				writer.write("horizontal");
+			if(this.turn == 'v')
+				writer.write("vertical");
+			
 		}
     	catch (IOException e)
     	{
@@ -191,5 +225,6 @@ public abstract class ASquadroGame extends AGame {
 				e.printStackTrace();
 			}
     	}
+    }
     }
 }
