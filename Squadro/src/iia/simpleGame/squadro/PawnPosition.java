@@ -17,8 +17,8 @@ public class PawnPosition {
 		this.position=pos;
 	}
 	
-	public void setForward(Boolean for)
+	public void setForward(Boolean forw)
 	{
-		this.forward = for;
+		this.forward=forw;
 	}
 }
