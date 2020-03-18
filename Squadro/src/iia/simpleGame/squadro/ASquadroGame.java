@@ -14,7 +14,15 @@ public abstract class ASquadroGame extends AGame {
     We would also use two counters for memorizing the number of pawns which return to the start 
     and a vector that stores how many steps each pawn can take.
     */
+    
+    ArrayList<PawnPosition> pawnPositionsH;
+    Integer counterH;
 
+    ArrayList<PawnPosition> pawnPositionsV;
+    Integer counterV;
+    
+    int stepsNumber[] = {3,1,2,1,3};
+    
     public ASquadroGame(){
         // TODO !
     }
