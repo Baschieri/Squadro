@@ -64,9 +64,14 @@ public abstract class ASquadroGame extends AGame {
     }
 
     @Override
-    public boolean isGameOver() {
-        // TODO !
-        return false;
+     public boolean isGameOver() {
+    	
+       if(counterH>=4 || counterV>=4)
+       {
+    	   return true;
+       }
+       
+       return true;
     }
     
         public void setFromFile(String fileName)
