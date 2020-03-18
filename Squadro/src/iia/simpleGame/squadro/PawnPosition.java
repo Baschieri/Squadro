@@ -8,6 +8,6 @@ public class PawnPosition {
 	public PawnPosition( Integer position) 
 	{
 		this.position = position;
-		this.position = true;
+		this.forward = true;
 	}
 }
