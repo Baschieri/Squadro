@@ -71,7 +71,7 @@ public abstract class ASquadroGame extends AGame {
     	   return true;
        }
        
-       return true;
+       return false;
     }
     
         public void setFromFile(String fileName)
