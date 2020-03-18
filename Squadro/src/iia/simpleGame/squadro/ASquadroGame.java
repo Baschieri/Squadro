@@ -69,10 +69,100 @@ public abstract class ASquadroGame extends AGame {
         return false;
     }
     
-    public void setFromFile(String fileName)
+        public void setFromFile(String fileName)
     {
+    	 //Esempio di cosa c'è in un file
+    	/*
+    	% Exemple 1
+		% ABCDEFG
+		01 ....... 01 
+		02 >...... 02 
+		03 >...... 03 
+		04 >...... 04 
+		05 >...... 05 
+		06 >...... 06 
+		07 .^^^^^. 07 
+		% ABCDEFG 
+		horizontal
+    	 */	
+    	try 
+    	{
+    		 BufferedReader reader = new BufferedReader(new FileReader(fileName));
+             String line = reader.readLine();
+             while(line!=null) 
+             {
+                 System.out.println(line);
+                 line = reader.readLine();
+                 if(!line.contains("%"))
+                 {
+                	 //this line isn't a comment
+                	 int linea = Integer.parseInt(line.substring(1, 1));
+                	 //linea contain 1 or 2 or 3 ecc..
+                	 int i=2;
+                	 int j=0;
+                	 char c = line.charAt(i);
+                	 while(c!= '\n')
+                	 {
+                		if(c=='>') 
+                		{
+                			PawnPosition pawn = pawnPositionsH.get(linea);
+                			pawn.setPosition(j);
+                			pawn.setForward(true);
+                		}
+                		if(c=='<')
+                		{
+                			PawnPosition pawn = pawnPositionsH.get(linea);
+                			pawn.setPosition(j);
+                			pawn.setForward(true);
+                		}
+                		
+                		if(c=='^')
+                		{
+                			PawnPosition pawn = pawnPositionsV.get(j);
+                			pawn.setPosition(linea);
+                			pawn.setForward(true);
+                		}
+                		if(c=='v')
+                		{
+                			PawnPosition pawn = pawnPositionsV.get(j);
+                			pawn.setPosition(linea);
+                			pawn.setForward(false);
+                		}
+                		
+                		i++;
+                		j++;
+                		
+                		c = line.charAt(i);
+                	 }
+                	 
+                	 for(int a=0;a<5;a++)
+                	 {
+                		 if( pawnPositionsH.get(a).position==0 && pawnPositionsH.get(a).forward==false)
+                		 {
+                			 counterH++;
+                		 }
+                		 
+                		 if(pawnPositionsV.get(a).position==0 && pawnPositionsV.get(a).forward==false)
+                		 {
+                			 counterV++;
+                		 }
+                	 }
+				
+                 }
+             }
+             
+             reader.close();
+		} 
+    	catch (Exception e) {
+			//file inesistente
+			//cosa faccio?
+			//TODO 
+			e.printStackTrace();
+		}
+    	
     	
     }
+    
     
     public void saveToFile(String fileName)
     {
