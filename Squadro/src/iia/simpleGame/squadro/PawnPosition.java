@@ -10,4 +10,15 @@ public class PawnPosition {
 		this.position = position;
 		this.forward = true;
 	}
+	
+	//Aggiungere controlli
+	public void setPosition(Integer pos)
+	{
+		this.position=pos;
+	}
+	
+	public void setForward(Boolean for)
+	{
+		this.forward = for;
+	}
 }
