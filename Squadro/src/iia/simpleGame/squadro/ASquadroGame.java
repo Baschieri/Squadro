@@ -4,6 +4,10 @@ import iia.simpleGame.base.AGame;
 import iia.simpleGame.base.IGame;
 
 import java.util.ArrayList;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public abstract class ASquadroGame extends AGame {
     
@@ -23,8 +27,21 @@ public abstract class ASquadroGame extends AGame {
     
     int stepsNumber[] = {3,1,2,1,3};
     
-    public ASquadroGame(){
-        // TODO !
+    char turn;
+    
+    public ASquadroGame()
+    {
+    	pawnPositionsH = new ArrayList<PawnPosition>();
+    	
+    	for(int i = 0; i < 5; i++)
+    		pawnPositionsH.add(new PawnPosition(i));
+    	counterH = 0;
+    	
+    	for(int i = 0; i < 5; i++)
+    		pawnPositionsV.add(new PawnPosition(i));
+    	counterV = 0;
+    	
+    	this.turn = 'V';
     }
 
     @Override
@@ -54,24 +71,30 @@ public abstract class ASquadroGame extends AGame {
     
     public void setFromFile(String fileName)
     {
-    
+    	
     }
     
     public void saveToFile(String fileName)
     {
-        //Esempio di cosa c'è in un file
-    	/*
-    	% Exemple 1
-		% ABCDEFG
-		01 ....... 01 
-		02 >...... 02 
-		03 >...... 03 
-		04 >...... 04 
-		05 >...... 05 
-		06 >...... 06 
-		07 .^^^^^. 07 
-		% ABCDEFG 
-		horizontal
-    	 */
+    	File f = new File(fileName);
+    	BufferedWriter writer = null;
+    	try
+    	{
+			writer = new BufferedWriter(new FileWriter(f));
+			
+			writer.write("");
+		}
+    	catch (IOException e)
+    	{
+			e.printStackTrace();
+		}
+    	finally // I close the writer regardless of what happens
+    	{
+    		try {
+				writer.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    	}
     }
 }
