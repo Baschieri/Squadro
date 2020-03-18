@@ -16,6 +16,7 @@ public abstract class ASquadroGame extends AGame {
         // TODO !
         return null;
     }
+    
 
     @Override
     public ArrayList<String> possibleMoves(String role) {
@@ -33,5 +34,15 @@ public abstract class ASquadroGame extends AGame {
     public boolean isGameOver() {
         // TODO !
         return false;
+    }
+    
+    public void setFromFile(String fileName)
+    {
+    
+    }
+    
+    public void saveToFile(String fileName)
+    {
+    
     }
 }
