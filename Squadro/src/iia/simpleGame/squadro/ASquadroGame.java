@@ -6,6 +6,14 @@ import iia.simpleGame.base.IGame;
 import java.util.ArrayList;
 
 public abstract class ASquadroGame extends AGame {
+    
+    /*
+    We would model a game board using two vectors containing an object with two value:
+        - an integer from 0 that represent the position of the n-th pawn in the table.
+        - a boolean that represent the direction of travel
+    We would also use two counters for memorizing the number of pawns which return to the start 
+    and a vector that stores how many steps each pawn can take.
+    */
 
     public ASquadroGame(){
         // TODO !
