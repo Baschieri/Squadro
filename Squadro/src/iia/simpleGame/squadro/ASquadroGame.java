@@ -34,16 +34,17 @@ public abstract class ASquadroGame extends AGame {
     public ASquadroGame()
     {
     	pawnPositionsH = new ArrayList<PawnPosition>();
+    	pawnPositionsV = new ArrayList<PawnPosition>();
     	
     	for(int i = 0; i < 5; i++)
-    		pawnPositionsH.add(new PawnPosition(i));
+    		pawnPositionsH.add(new PawnPosition(0));
     	counterH = 0;
     	
     	for(int i = 0; i < 5; i++)
-    		pawnPositionsV.add(new PawnPosition(i));
+    		pawnPositionsV.add(new PawnPosition(0));
     	counterV = 0;
     	
-    	this.turn = 'V';
+    	this.turn = 'v';
     }
 
     @Override
