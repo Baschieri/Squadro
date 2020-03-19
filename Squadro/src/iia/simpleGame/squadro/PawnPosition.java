@@ -21,4 +21,11 @@ public class PawnPosition {
 	{
 		this.forward=forw;
 	}
+	
+	public String toString()
+	{
+		return(position.toString() + forward.toString());
+		
+	}
+	
 }
