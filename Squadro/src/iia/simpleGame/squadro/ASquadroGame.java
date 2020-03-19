@@ -177,7 +177,7 @@ public abstract class ASquadroGame extends AGame {
     
     public void saveToFile(String fileName)
     {
-    	File f = new File(fileName);
+    	    	File f = new File(fileName);
     	BufferedWriter writer = null;
     	
     	try
@@ -186,20 +186,42 @@ public abstract class ASquadroGame extends AGame {
 			
 			writer.write("% ABCDEFG\n");
 			
-			
-			for(int i = 0; i < 7; i++) // scorre la riga
+			writer.write("01");
+			writer.write('.'); // the coordinate (A,1) is always empty
+			for(int i = 0; i < 5; i++) // look at the first row
 			{
-				writer.write("0" + i);
+				if(pawnPositionsV.get(i).position == 6)
+					if(pawnPositionsV.get(i).forward == true)
+						writer.write('^');
+					else
+						writer.write('v');
+				else
+					writer.write('.');
+			}
+			writer.write('.'); // the coordinate (G,1) is always empty
+			writer.write("01\n");
+			
+			for(int i = 0; i < 5; i++) // look at the row from 1 to 5
+			{
+				writer.write("0" + (i+2));
 				
-				for(int j = 0; j < 7; j++) // scorre la colonna
+				if(pawnPositionsH.get(i).position == 0) // look at the coordinate of the first column
+					if(pawnPositionsH.get(i).forward == true)
+						writer.write('>');
+					else
+						writer.write('<');
+				else
+					writer.write('.');
+					
+				for(int j = 0; j < 5; j++) // for each row I look at each possible vertical panws 
 				{
-					if(pawnPositionsH.get(i).position == j)
+					if(pawnPositionsH.get(i).position == j + 1)
 						if(pawnPositionsH.get(i).forward == true)
 							writer.write('>');
 						else
 							writer.write('<');
 					else
-					if(pawnPositionsV.get(j).position == i)
+					if(pawnPositionsV.get(j).position == 5 - i)
 						if(pawnPositionsV.get(j).forward == true)
 							writer.write('^');
 						else
@@ -208,8 +230,31 @@ public abstract class ASquadroGame extends AGame {
 						writer.write('.');
 				}
 				
-				writer.write("0" + i);
+				if(pawnPositionsH.get(i).position == 6) // look at the coordinate of the last column
+					if(pawnPositionsH.get(i).forward == true)
+						writer.write('>');
+					else
+						writer.write('<');
+				else
+					writer.write('.');
+				
+				writer.write("0" + (i+2) +"\n");
 			}
+			
+			writer.write("07");
+			writer.write('.'); // the coordinate (A,7) is always empty
+			for(int i = 0; i < 5; i++) // look at the first row
+			{
+				if(pawnPositionsV.get(i).position == 0)
+					if(pawnPositionsV.get(i).forward == true)
+						writer.write('^');
+					else
+						writer.write('v');
+				else
+					writer.write('.');
+			}
+			writer.write("."); // the coordinate (G,7) is always empty
+			writer.write("07\n");
 			
 			writer.write("% ABCDEFG\n");
 			
@@ -231,6 +276,8 @@ public abstract class ASquadroGame extends AGame {
 				e.printStackTrace();
 			}
     	}
+    	
+    }
     }
     
     
