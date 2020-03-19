@@ -92,9 +92,10 @@ public abstract class ASquadroGame extends AGame {
 		% ABCDEFG 
 		horizontal
     	 */	
+        BufferedReader reader = null;
     	try 
     	{
-    		 BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    		 reader = new BufferedReader(new FileReader(fileName));
              String line = reader.readLine();
              while(line!=null) 
              {
@@ -165,6 +166,9 @@ public abstract class ASquadroGame extends AGame {
 			//cosa faccio?
 			//TODO 
 			e.printStackTrace();
+		}
+    	finally {
+			reader.close();
 		}
     	
     	
