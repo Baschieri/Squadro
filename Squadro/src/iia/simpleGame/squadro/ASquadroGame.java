@@ -56,9 +56,127 @@ public abstract class ASquadroGame extends AGame {
 
     @Override
     public ArrayList<String> possibleMoves(String role) {
-        // TODO !
-        return null;
+        
+    	ArrayList<String> possibleMoves = new ArrayList<String>();
+    	
+    	PawnPosition p = null;
+    	int nextPosition = 0;
+    	Boolean jump = false;
+    	
+    	if(role.equals("horizontal") && turn == 'h')
+    	{
+    		for(int i = 0; i < 5; i++) // I have a move for each pawn in the table
+    		{
+    			p = pawnPositionsH.get(i);
+    			
+    			// I look at what move I can do with each pawn
+    			if(p.forward)
+    			{
+    				for(int j = p.position + 1; j < 6 || j < (p.position + stepsNumberH[i]); j++)
+    				{
+    					if(jump == false)
+    						nextPosition = j;
+    					
+    					if(pawnPositionsV.get(j).position == i+1)
+    					{
+    						nextPosition = j + 1;
+    						jump = true;
+    					}
+    					else
+    					if(jump == true)		// So if at the privious iteration I jump on en 
+    					{				 		// enemy and in this position there aren't any 
+    						nextPosition = j;	// I find where i can locate with this pawn
+    						break;
+    					}
+    				}
+    			}
+    			else // (!p.forward)
+    			{
+    				for(int j = p.position-1; j > 0 || j > (p.position + stepsNumberV[i]); j--)
+    				{
+    					if(jump == false)
+    						nextPosition = j;
+    					
+    					if(pawnPositionsV.get(j).position == i+1)
+    					{
+    						nextPosition = j - 1;
+    						jump = true;
+    					}
+    					else
+    					if(jump == true)		// So if at the privious iteration I jump on en 
+    					{				 		// enemy and in this position there aren't any 
+    						nextPosition = j;	// I find where i can locate with this pawn
+    						break;
+    					}	
+    				}
+    			}
+    			
+    			//TODO trasformare la nuova e vecchia posizione in una stringa con formato "A4-C4"
+    			//	   e aggiungerla al vettore
+    			
+    			// oldPosition --> pawnPositionsH.get(i).position;
+    			// newPositino --> nextPosition
+    		}
+    	}
+    	if(role.equals("vertical") && turn == 'v')
+    	{
+    		for(int i = 0; i < 5; i++) // I have a move for each pawn in the table
+    		{
+    			p = pawnPositionsH.get(i);
+    			
+    			// I look at what move I can do with each pawn
+    			if(p.forward)
+    			{
+    				for(int j = p.position + 1; j < 6 || j < (p.position + stepsNumberH[i]); j++)
+    				{
+    					if(jump == false)
+    						nextPosition = j;
+    					
+    					if(pawnPositionsV.get(j).position == i+1)
+    					{
+    						nextPosition = j + 1;
+    						jump = true;
+    					}
+    					else
+    					if(jump == true)		// So if at the privious iteration I jump on en 
+    					{				 		// enemy and in this position there aren't any 
+    						nextPosition = j;	// I find where i can locate with this pawn
+    						break;
+    					}
+    				}
+    			}
+    			else // (!p.forward)
+    			{
+    				for(int j = p.position-1; j > 0 || j > (p.position + stepsNumberV[i]); j--)
+    				{
+    					if(jump == false)
+    						nextPosition = j;
+    					
+    					if(pawnPositionsV.get(j).position == i+1)
+    					{
+    						nextPosition = j - 1;
+    						jump = true;
+    					}
+    					else
+    					if(jump == true)		// So if at the privious iteration I jump on en 
+    					{				 		// enemy and in this position there aren't any 
+    						nextPosition = j;	// I find where i can locate with this pawn
+    						break;
+    					}	
+    				}
+    			}
+    			
+    			//TODO trasformare la nuova e vecchia posizione in una stringa con formato "A4-C4"
+    			//	   e aggiungerla al vettore
+    			
+    			// oldPosition --> pawnPositionsH.get(i).position;
+    			// newPositino --> nextPosition
+    		}
+    	}
+    	
+    	return possibleMoves;
     }
+
 
     @Override
     public boolean isValidMove(String move, String role) {
