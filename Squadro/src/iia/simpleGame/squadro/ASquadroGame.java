@@ -210,22 +210,22 @@ public abstract class ASquadroGame extends AGame {
     
         //FINE SETFROMFILE
     
-    public void saveToFile(String fileName)
+        public void saveToFile(String fileName)
     {
-    	    	File f = new File(fileName);
+    	File f = new File(fileName);
     	BufferedWriter writer = null;
     	
     	try
     	{
 			writer = new BufferedWriter(new FileWriter(f));
 			
-			writer.write("% ABCDEFG\n");
+			writer.write("%  ABCDEFG\n");
 			
-			writer.write("01");
+			writer.write("01 ");
 			writer.write('.'); // the coordinate (A,1) is always empty
 			for(int i = 0; i < 5; i++) // look at the first row
 			{
-				if(pawnPositionsV.get(i).position == 6)
+				if(pawnPositionsV.get(i).position == 0)
 					if(pawnPositionsV.get(i).forward == true)
 						writer.write('^');
 					else
@@ -234,11 +234,11 @@ public abstract class ASquadroGame extends AGame {
 					writer.write('.');
 			}
 			writer.write('.'); // the coordinate (G,1) is always empty
-			writer.write("01\n");
+			writer.write(" 01\n");
 			
 			for(int i = 0; i < 5; i++) // look at the row from 1 to 5
 			{
-				writer.write("0" + (i+2));
+				writer.write("0" + (i+2) + " ");
 				
 				if(pawnPositionsH.get(i).position == 0) // look at the coordinate of the first column
 					if(pawnPositionsH.get(i).forward == true)
@@ -248,7 +248,7 @@ public abstract class ASquadroGame extends AGame {
 				else
 					writer.write('.');
 					
-				for(int j = 0; j < 5; j++) // for each row I look at each possible vertical panws 
+				for(int j = 0; j < 5; j++) // for each row I look at all the possible panws 
 				{
 					if(pawnPositionsH.get(i).position == j + 1)
 						if(pawnPositionsH.get(i).forward == true)
@@ -256,7 +256,7 @@ public abstract class ASquadroGame extends AGame {
 						else
 							writer.write('<');
 					else
-					if(pawnPositionsV.get(j).position == 5 - i)
+					if(pawnPositionsV.get(j).position == i+1)
 						if(pawnPositionsV.get(j).forward == true)
 							writer.write('^');
 						else
@@ -273,14 +273,15 @@ public abstract class ASquadroGame extends AGame {
 				else
 					writer.write('.');
 				
-				writer.write("0" + (i+2) +"\n");
+				writer.write(" 0" + (i+2) +"\n");
 			}
 			
-			writer.write("07");
+			writer.write("07 ");
 			writer.write('.'); // the coordinate (A,7) is always empty
-			for(int i = 0; i < 5; i++) // look at the first row
+			
+			for(int i = 0; i < 5; i++) // look at the last row
 			{
-				if(pawnPositionsV.get(i).position == 0)
+				if(pawnPositionsV.get(i).position == 6)
 					if(pawnPositionsV.get(i).forward == true)
 						writer.write('^');
 					else
@@ -289,9 +290,10 @@ public abstract class ASquadroGame extends AGame {
 					writer.write('.');
 			}
 			writer.write("."); // the coordinate (G,7) is always empty
-			writer.write("07\n");
 			
-			writer.write("% ABCDEFG\n");
+			writer.write(" 07\n");
+			
+			writer.write("%  ABCDEFG\n");
 			
 			if(this.turn == 'h')
 				writer.write("horizontal");
@@ -312,8 +314,7 @@ public abstract class ASquadroGame extends AGame {
 			}
     	}
     	
-    }
-    }
+    } //SaveToFile
     
     
     
