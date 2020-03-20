@@ -110,16 +110,38 @@ public abstract class ASquadroGame extends AGame {
     	return possibleMoves;
     }
 
-    @Override
-    public boolean isValidMove(String move, String role)
+	@override
+   public boolean isValidMove(String move, String role)
     {
     	
     	// TODO
     	// ricavare l'index attuale della pedina dalla stringa move,
     	// chiamare il metodo pawnMove e verificare che la stringa move sia uguale
+    	Move thisMove = new Move(move);
+    	
+    	if(role.equals("vertical"))
+    	{
+    		
+    		if(pawnMove(pawnPositionsV.get(thisMove.getOldLine()), role, thisMove.getOldLine())==move)
+    		{
+    			return true;
+    		}
+
+    	}
+    	else if(role.equals("horizontal"))
+    	{
+    		if(pawnMove(pawnPositionsH.get(thisMove.getOldColum()), role, thisMove.getOldColum())==move)
+    		{
+    			return true;
+    		}
+    	}
+    	else {
+			//lancia eccezione o boh
+		}
     	
         return false;
     }
+    
     
     // it returns the only move that a pawn can do
     // where index is
