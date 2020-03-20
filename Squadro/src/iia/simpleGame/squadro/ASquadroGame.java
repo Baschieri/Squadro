@@ -138,42 +138,50 @@ public class ASquadroGame extends AGame {
     	{
 	    	if(p.forward)
 			{
-				for(int j = p.position + 1; j < 6 && j < (p.position + stepsNumberH[index]); j++)
+				for(int j = p.position + 1; j <= 6 && j <= (p.position + stepsNumberH[index-1]); j++)
 				{
 					if(jump == false)
 						nextPosition = j;
-					
-					if(pawnPositionsV.get(j).position == index+1)
+					if(j != 0) // to avoid outOfBound
 					{
-						nextPosition = j + 1;
-						jump = true;
-					}
-					else
-					if(jump == true)		// So if at the privious iteration I jump on en 
-					{				 		// enemy and in this position there aren't any 
-						nextPosition = j;	// I find where i can locate with this pawn
-						break;
+						// I look if the opposing pawn of the same column where I'm about to come is also in the same row
+
+						if(pawnPositionsV.get(j-1).position == index)
+						{
+							nextPosition = j + 1;
+							jump = true;
+						}
+						else
+						if(jump == true)		// So if at the privious iteration I jump on en 
+						{				 		// enemy and in this position there aren't any 
+							nextPosition = j;	// I find where i can locate with this pawn
+							break;
+						}
 					}
 				}
 			}
 			else // (!p.forward)
 			{
-				for(int j = p.position-1; j > 0 && j > (p.position - stepsNumberV[index]); j--)
+				for(int j = p.position-1; j >= 0 && j >= (p.position - stepsNumberV[index-1]); j--)
 				{
 					if(jump == false)
 						nextPosition = j;
 					
-					if(pawnPositionsV.get(j).position == index+1)
+					if(j != 0) // to avoid outOfBound
 					{
-						nextPosition = j - 1;
-						jump = true;
+						// I look if the opposing pawn of the same column where I'm about to come is also in the same row
+						if(pawnPositionsV.get(j-1).position == index)
+						{
+							nextPosition = j - 1;
+							jump = true;
+						}
+						else
+						if(jump == true)		// So if at the privious iteration I jump on en 
+						{				 		// enemy and in this position there aren't any 
+							nextPosition = j;	// I find where i can locate with this pawn
+							break;
+						}
 					}
-					else
-					if(jump == true)		// So if at the privious iteration I jump on en 
-					{				 		// enemy and in this position there aren't any 
-						nextPosition = j;	// I find where i can locate with this pawn
-						break;
-					}	
 				}
 			}
 	    	
@@ -183,48 +191,56 @@ public class ASquadroGame extends AGame {
     	{
     		if(p.forward)
     		{
-    			for(int j = p.position -1; j > 0 && j > (p.position - stepsNumberV[index]); j--)
+    			
+    			for(int j = p.position -1; j >= 0 && j >= (p.position - stepsNumberV[index-1]); j--)
     			{
     				if(jump == false)
     					nextPosition = j;
-    				if(pawnPositionsH.get(j).position == index+1)
-					{
-						nextPosition = j - 1;
-						jump = true;
-					}
-					else
-					if(jump == true)		// So if at the privious iteration I jump on en 
-					{				 		// enemy and in this position there aren't any 
-						nextPosition = j;	// I find where i can locate with this pawn
-						break;
-					}	
+    				
+    				if(j != 0) // to avoid outOfBound
+    				{
+    					// I look if the opposing pawn of the same row where I'm about to come is also in the same column
+    					if(pawnPositionsH.get(j-1).position == index)
+    					{
+    						nextPosition = j - 1; // if yes I jump on it 
+    						jump = true;
+    					}
+    					else
+    						if(jump == true)		// So if at the privious iteration I jump on en 
+    						{				 		// enemy and in this position there aren't any 
+    							nextPosition = j;	// I find where i can locate with this pawn
+    							break;
+    						}
+    				}
     			}
     		}
     		else
     		{
-				for(int j = p.position + 1; j < 6 && j < (p.position + stepsNumberH[index]); j++)
+				for(int j = p.position + 1; j <= 6 && j <= (p.position + stepsNumberV[index-1]); j++)
 				{
 					if(jump == false)
 						nextPosition = j;
 					
-					if(pawnPositionsH.get(j).position == index+1)
+					System.out.println(j);
+					
+					if(j != 6) // to avoid outOfBound
 					{
-						nextPosition = j + 1;
-						jump = true;
-					}
-					else
-					if(jump == true)		// So if at the privious iteration I jump on en 
-					{				 		// enemy and in this position there aren't any 
-						nextPosition = j;	// I find where i can locate with this pawn
-						break;
+						// I look if the opposing pawn of the same row where I'm about to come is also in the same column
+						if(pawnPositionsH.get(j-1).position == index)
+						{
+							nextPosition = j + 1;
+							jump = true;
+						}
+						else
+						if(jump == true)		// So if at the privious iteration I jump on en 
+						{				 		// enemy and in this position there aren't any 
+							nextPosition = j;	// I find where i can locate with this pawn
+							break;
+						}
 					}
 				}
     		}
-    		
-    		/*System.out.println("vecchia posizione: ");
-    		
-    		System.out.println("nuova posizione: ");
-    		*/
+
     		m = new Move(index, p.position, index, nextPosition); 
     	}
     	
@@ -232,19 +248,7 @@ public class ASquadroGame extends AGame {
 		return m.toString();
     	
 	}
- 
-
-    @Override
-    public boolean isGameOver() {
-        
-    	if(counterH>=4 || counterV>=4)
-        {
-     	   return true;
-        }
-        
-        return false;
-    }
-    
+	
     
      public void setFromFile(String fileName)
     {
