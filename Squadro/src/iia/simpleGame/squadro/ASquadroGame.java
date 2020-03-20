@@ -48,9 +48,27 @@ public class ASquadroGame extends AGame {
     	this.turn = 'v';
     }
 
-    @Override
     public IGame play(String move, String role) {
-        // TODO !
+       
+    	Move thisMove = new Move(move);
+    	PawnPosition temp;
+    	
+    	switch (role) {
+    	
+		case "horizontal":
+			temp=pawnPositionsH.get(thisMove.getOldLine());
+			temp.setPosition(thisMove.getNewColum());
+			break;
+			
+		case "vertical":
+			temp = pawnPositionsV.get(thisMove.getOldColum());
+			temp.setPosition(thisMove.getNewLine());
+			break;
+
+		default:
+			break;
+		}
+    
         return null;
     }
     
