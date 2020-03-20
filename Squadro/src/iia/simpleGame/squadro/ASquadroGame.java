@@ -48,10 +48,13 @@ public class ASquadroGame extends AGame {
     	this.turn = 'v';
     }
 
-    public IGame play(String move, String role) {
+   public IGame play(String move, String role) {
        
     	Move thisMove = new Move(move);
     	PawnPosition temp;
+    	
+    	//TODO utile o no?!??!?!?!?
+    	//if(!isValidMove(move, role)) { return null;}
     	
     	switch (role) {
     	
