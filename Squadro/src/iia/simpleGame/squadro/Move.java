@@ -4,10 +4,10 @@ package iia.simpleGame.squadro;
 
 public class Move {
 	
-	int oldColum;
-	int oldLline;
-	int newColum;
-	int newLine;
+	private int oldColum;
+	private int oldLline;
+	private int newColum;
+	private int newLine;
 	
 	public Move(int oc, int ol, int nc, int nl) 
 	{
@@ -108,5 +108,28 @@ public class Move {
 	
 		}
 	}
+	
+	public int getOldLine()
+	{
+		return oldLline;
+	}
+	
+	public int getOldColum()
+	{
+		return oldColum;
+	}
+	
+	public int getNewLine()
+	{
+		return newLine;
+	}
+	
+	public int getNewColum()
+	{
+		return newColum;
+	}
+	
+	
+	
 
 }
