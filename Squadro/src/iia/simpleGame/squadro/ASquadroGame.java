@@ -91,16 +91,37 @@ public class ASquadroGame extends AGame {
     }
     
 
-    @Override
-    public boolean isValidMove(String move, String role)
+   public boolean isValidMove(String move, String role)
     {
     	
     	// TODO
     	// ricavare l'index attuale della pedina dalla stringa move,
     	// chiamare il metodo pawnMove e verificare che la stringa move sia uguale
+    	Move thisMove = new Move(move);
+    	
+    	if(role.equals("vertical"))
+    	{
+    		
+    		if(pawnMove(pawnPositionsV.get(thisMove.getOldLine()), role, thisMove.getOldLine())==move)
+    		{
+    			return true;
+    		}
+
+    	}
+    	else if(role.equals("horizontal"))
+    	{
+    		if(pawnMove(pawnPositionsH.get(thisMove.getOldColum()), role, thisMove.getOldColum())==move)
+    		{
+    			return true;
+    		}
+    	}
+    	else {
+			//lancia eccezione o boh
+		}
     	
         return false;
     }
+	//FINE ISVALIDMOVE
     
     
     // it returns the only move that a pawn can do
@@ -225,50 +246,94 @@ public class ASquadroGame extends AGame {
     }
     
     
-    public void setFromFile(String fileName)
+     public void setFromFile(String fileName)
     {
+    	 //Esempio di cosa c'è in un file
+    	/*
+    	% Exemple 1
+		% ABCDEFG
+		01 ....... 01 
+		02 >...... 02 
+		03 >...... 03 
+		04 >...... 04 
+		05 >...... 05 
+		06 >...... 06 
+		07 .^^^^^. 07 
+		% ABCDEFG 
+		horizontal
+    	 */	
+        BufferedReader reader = null;
     	try 
     	{
-    		 BufferedReader reader = new BufferedReader(new FileReader(fileName));
+    	
+    		 reader = new BufferedReader(new FileReader(fileName));
              String line = reader.readLine();
              while(line!=null) 
              {
-                 System.out.println(line);
+                 //System.out.println(line);
                  line = reader.readLine();
-                 if(!line.contains("%"))
+                 if(line!= null && !line.contains("%"))
                  {
-                	 //this line isn't a comment
-                	 int linea = Integer.parseInt(line.substring(1, 1));
-                	 //linea contain 1 or 2 or 3 ecc..
-                	 int i=2;
-                	 int j=0;
-                	 char c = line.charAt(i);
-                	 while(c!= '\n')
+                	 if(line.contains("horizontal"))
                 	 {
+                		 turn='h';
+                		// System.out.println("turno orizzontal");
+                		 continue;
+                		 
+                	 }
+                	 
+                	 if(line.contains("vertical"))
+                	 {
+                		 turn='v';
+                		 //System.out.println("turno vertical");
+                		 continue;
+                	 }
+                	// System.out.println("analizzo la linea= " + line);
+                	 //this line isn't a comment
+                	 int linea = Integer.parseInt(line.substring(1, 2));
+                	 //System.out.println("LINEA N.= " + linea);
+                	 //linea contain 1 or 2 or 3 ecc..
+                	 int i=3; //salto 01 e lo spazio
+                	 int j=0;
+                	 int index=0;
+                	 int colon=0;
+                	 char c = line.charAt(i);
+                	 while(i<line.length()-2) // -2 sono i caratteri 01 finali (o 02 o 03 ecc)
+                	 {  
                 		if(c=='>') 
                 		{
-                			PawnPosition pawn = pawnPositionsH.get(linea);
+                			index=linea-2; //xche la prima pedina orizzontale si muove sulla 2 riga
+                			PawnPosition pawn = pawnPositionsH.get(index);
                 			pawn.setPosition(j);
                 			pawn.setForward(true);
+                			//System.out.println("pedina > " + index +"esima riga" + " trovata nella colonna= " + j + " con verso true");
                 		}
                 		if(c=='<')
-                		{
-                			PawnPosition pawn = pawnPositionsH.get(linea);
+                		{	
+                			index= linea-2;
+                			PawnPosition pawn = pawnPositionsH.get(index);
                 			pawn.setPosition(j);
-                			pawn.setForward(true);
+                			pawn.setForward(false);
+                			//System.out.println("pedina < " + index +"esima riga" + " trovata nella colonna= " + j + " con verso false");
                 		}
                 		
                 		if(c=='^')
                 		{
-                			PawnPosition pawn = pawnPositionsV.get(j);
-                			pawn.setPosition(linea);
+                			index=linea-1;
+                			//System.out.println("pedina ^ " + colon +"esima colonna" + " trovata nella riga=  "  + index);
+                			colon = j-1;
+                			PawnPosition pawn = pawnPositionsV.get(colon);
+                			pawn.setPosition(index);
                 			pawn.setForward(true);
+                			
                 		}
                 		if(c=='v')
                 		{
+                			index=linea-1;
                 			PawnPosition pawn = pawnPositionsV.get(j);
-                			pawn.setPosition(linea);
+                			pawn.setPosition(index);
                 			pawn.setForward(false);
+                			//System.out.println("pedina ^ " + colon+"esima colonna" + " trovata nella riga=  "  + index);
                 		}
                 		
                 		i++;
@@ -293,6 +358,9 @@ public class ASquadroGame extends AGame {
                  }
              }
              
+             System.out.println(pawnPositionsH);
+             System.out.println(pawnPositionsV);
+             
              reader.close();
 		} 
     	catch (Exception e) {
@@ -301,8 +369,15 @@ public class ASquadroGame extends AGame {
 			//TODO 
 			e.printStackTrace();
 		}
+    	finally {
+    		
+			try {reader.close();} catch (IOException e) {e.printStackTrace();}
+		}
+    	
     	
     }
+    
+        //FINE SETFROMFILE
     
     public void saveToFile(String fileName)
     {
