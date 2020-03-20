@@ -11,7 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class ASquadroGame extends AGame {
+public abstract class ASquadroGame extends AGame {
     
     /*
     We would model a game board using two vectors containing an object with two value:
@@ -27,8 +27,8 @@ public class ASquadroGame extends AGame {
     ArrayList<PawnPosition> pawnPositionsV;
     Integer counterV;
     
-    int stepsNumberH[] = {3,1,2,1,3};
-    int stepsNumberV[] = {1,3,2,3,1};
+    int stepsNumberV[] = {3,1,2,1,3};
+    int stepsNumberH[] = {1,3,2,3,1};
     
     char turn;
     
@@ -45,15 +45,15 @@ public class ASquadroGame extends AGame {
     		pawnPositionsV.add(new PawnPosition(6));
     	counterV = 0;
     	
-    	this.turn = 'v';
+    	this.turn = 'h';
     }
 
-   public IGame play(String move, String role) {
-       
+    @Override
+    public IGame play(String move, String role)
+    {
     	Move thisMove = new Move(move);
     	PawnPosition temp;
     	
-    	//TODO utile o no?!??!?!?!?
     	//if(!isValidMove(move, role)) { return null;}
     	
     	switch (role) {
@@ -109,40 +109,17 @@ public class ASquadroGame extends AGame {
     	
     	return possibleMoves;
     }
-    
 
-   public boolean isValidMove(String move, String role)
+    @Override
+    public boolean isValidMove(String move, String role)
     {
     	
     	// TODO
     	// ricavare l'index attuale della pedina dalla stringa move,
     	// chiamare il metodo pawnMove e verificare che la stringa move sia uguale
-    	Move thisMove = new Move(move);
-    	
-    	if(role.equals("vertical"))
-    	{
-    		
-    		if(pawnMove(pawnPositionsV.get(thisMove.getOldLine()), role, thisMove.getOldLine())==move)
-    		{
-    			return true;
-    		}
-
-    	}
-    	else if(role.equals("horizontal"))
-    	{
-    		if(pawnMove(pawnPositionsH.get(thisMove.getOldColum()), role, thisMove.getOldColum())==move)
-    		{
-    			return true;
-    		}
-    	}
-    	else {
-			//lancia eccezione o boh
-		}
     	
         return false;
     }
-	//FINE ISVALIDMOVE
-    
     
     // it returns the only move that a pawn can do
     // where index is
@@ -162,7 +139,7 @@ public class ASquadroGame extends AGame {
 				{
 					if(jump == false)
 						nextPosition = j;
-					if(j != 0) // to avoid outOfBound
+					if(j != 6) // to avoid outOfBound
 					{
 						// I look if the opposing pawn of the same column where I'm about to come is also in the same row
 
@@ -269,8 +246,9 @@ public class ASquadroGame extends AGame {
     	
 	}
 
-	
-	public boolean isGameOver() {
+    @Override
+    public boolean isGameOver()
+    {
         
     	if(counterH>=4 || counterV>=4)
         {
@@ -280,7 +258,7 @@ public class ASquadroGame extends AGame {
         return false;
     }
     
-     public void setFromFile(String fileName)
+    public void setFromFile(String fileName)
     {
     	 //Esempio di cosa c'è in un file
     	/*
@@ -411,8 +389,6 @@ public class ASquadroGame extends AGame {
     	
     }
     
-        //FINE SETFROMFILE
-    
     public void saveToFile(String fileName)
     {
     	File f = new File(fileName);
@@ -518,12 +494,6 @@ public class ASquadroGame extends AGame {
     	}
     	
     } //SaveToFile
-
-	@Override
-	public int getValue(String role) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
     
     
 }
