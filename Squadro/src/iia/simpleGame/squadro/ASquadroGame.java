@@ -48,32 +48,121 @@ public abstract class ASquadroGame extends AGame {
     	this.turn = 'h';
     }
 
-    @Override
+        @Override
     public IGame play(String move, String role)
     {
     	Move thisMove = new Move(move);
     	PawnPosition temp;
     	
-    	//if(!isValidMove(move, role)) { return null;}
-    	
+    	int oldRaw=thisMove.getOldLine();
+		int oldCol=thisMove.getOldColum();
+		int newRaw=thisMove.getNewLine();
+		int newCol=thisMove.getNewColum();
+		
+		/*
+    	if(!isValidMove(move, role)) 
+    	{ 
+    		System.out.println(move);
+    		System.out.println("AAA");
+    		return null; 
+    	}
+    	*/
     	switch (role) {
     	
 		case "horizontal":
-			temp=pawnPositionsH.get(thisMove.getOldLine());
-			temp.setPosition(thisMove.getNewColum());
+			temp=pawnPositionsH.get(--oldRaw);
+			temp.setPosition(newCol);
+			//check if i have to eat some enemy's pawn
+			if(temp.forward)
+			{
+				for(int i=oldCol;i<newCol;i++)
+				{
+					if(i==0 || i==6) continue;
+					PawnPosition tempPawn =pawnPositionsV.get(i-1);
+
+					if(--tempPawn.position>=oldCol && --tempPawn.position<=newCol)
+					{
+						if(tempPawn.forward)
+						{
+								tempPawn.setPosition(6);
+						}
+						else 
+						{
+							tempPawn.setPosition(0);
+						}
+					}
+				}
+			}
+			else if(!temp.forward)
+			{
+				for(int i=newCol;i<oldCol;i--)
+				{
+					if(i==0 || i==6) continue;
+					PawnPosition tempPawn =pawnPositionsV.get(i-1);
+					if(tempPawn.position>=oldCol && tempPawn.position<=newCol)
+					{
+						if(tempPawn.forward)
+						{
+								tempPawn.setPosition(6);
+						}
+						else 
+						{
+							tempPawn.setPosition(0);
+						}
+					}
+					
+				}
+			}
+			
 			break;
 			
 		case "vertical":
-			temp = pawnPositionsV.get(thisMove.getOldColum());
-			temp.setPosition(thisMove.getNewLine());
+			temp = pawnPositionsV.get(--oldCol);
+			temp.setPosition(newRaw);
+			if(temp.forward)
+			{
+				for(int i=oldRaw;i<newRaw;i++)
+				{
+					if(i==0 || i==6) continue;
+					PawnPosition temPawn = pawnPositionsH.get(i-1);
+					if(temPawn.position>= oldRaw && temPawn.position<=newRaw)
+					{
+						if(temPawn.forward)
+						{
+							temPawn.setPosition(0);
+						}
+						else temPawn.setPosition(6);
+					}
+				}
+			}
+			else if(!temp.forward)
+			{
+				for(int i=newRaw;i<oldRaw;i--)
+				{
+					if(i==0 || i==6) continue;
+					PawnPosition temPawn = pawnPositionsH.get(i-1);
+					if(temPawn.position>= oldRaw && temPawn.position<=newRaw)
+					{
+						if(temPawn.forward)
+						{
+							temPawn.setPosition(0);
+						}
+						else temPawn.setPosition(6);
+					}
+				}
+			}
 			break;
 
 		default:
+			
 			break;
 		}
-    
+    	
+    	System.out.println(pawnPositionsH);
+    	System.out.println(pawnPositionsV);
         return null;
     }
+    
     
     
     @Override
