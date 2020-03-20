@@ -266,6 +266,7 @@ public class ASquadroGame extends AGame {
 		return m.toString();
     	
 	}
+
 	
 	public boolean isGameOver() {
         
