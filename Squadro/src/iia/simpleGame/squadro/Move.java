@@ -22,15 +22,17 @@ public class Move {
 		//A4-C3 - oldColum=0 oldLine=4 newCOlum=2 newLine=3
 		oldColum=alphaToInt(move.substring(0, 1));
 		oldLline=Integer.parseInt(move.substring(1, 2));
+		oldLline--;
 		
 		newColum=alphaToInt(move.substring(3, 4));
 		newLine=Integer.parseInt(move.substring(4, 5));
+		newLine--;
 	}
 	
 	public String toString()
 	{
 		
-		return intToAlpha(oldColum)+oldLline+"-"+intToAlpha(newColum)+newLine;
+		return intToAlpha(oldColum)+(1+oldLline)+"-"+intToAlpha(newColum)+(1+newLine);
 		
 	}
 	
