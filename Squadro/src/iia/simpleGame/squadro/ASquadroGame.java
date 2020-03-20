@@ -267,6 +267,15 @@ public class ASquadroGame extends AGame {
     	
 	}
 	
+	public boolean isGameOver() {
+        
+    	if(counterH>=4 || counterV>=4)
+        {
+     	   return true;
+        }
+        
+        return false;
+    }
     
      public void setFromFile(String fileName)
     {
