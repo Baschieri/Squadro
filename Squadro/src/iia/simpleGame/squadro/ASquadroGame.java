@@ -74,13 +74,12 @@ public class ASquadroGame extends AGame {
     
     
     @Override
-    public ArrayList<String> possibleMoves(String role) {
+    public ArrayList<String> possibleMoves(String role)
+    {
         
     	ArrayList<String> possibleMoves = new ArrayList<String>();
     	
     	PawnPosition p = null;
-    	int nextPosition = 0;
-    	Boolean jump = false;
     	
     	// TODO considerare che quando la pedina arriva alla fine non va più mossa
     	
@@ -91,17 +90,17 @@ public class ASquadroGame extends AGame {
     			p = pawnPositionsH.get(i);
     			
     			if(p != null)
-    				possibleMoves.add(pawnMove(p, "horizontal", i));
+    				possibleMoves.add(pawnMove(p, "horizontal", i+1));
     		}
     	}
     	if(role.equals("vertical") && turn == 'v')
     	{
     		for(int i = 0; i < 5; i++) // I have a move for each pawn in the table
     		{
-    			p = pawnPositionsH.get(i);
+    			p = pawnPositionsV.get(i);
     			
     			if(p != null)
-    				possibleMoves.add(pawnMove(p, "horizontal", i));
+    				possibleMoves.add(pawnMove(p, "vertical", i+1));
     		}
     	}
     	
