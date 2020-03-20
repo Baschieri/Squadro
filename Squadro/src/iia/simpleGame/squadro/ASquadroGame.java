@@ -11,7 +11,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public abstract class ASquadroGame extends AGame {
+public class ASquadroGame extends AGame {
     
     /*
     We would model a game board using two vectors containing an object with two value:
@@ -409,6 +409,12 @@ public abstract class ASquadroGame extends AGame {
     	}
     	
     } //SaveToFile
+
+	@Override
+	public int getValue(String role) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
     
     
 }
